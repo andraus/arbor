@@ -133,6 +133,8 @@
               if (lastTick){
                 nodeData[k] = colors[k][2]
               }else{
+                  // no default color present, assuming "lightgray"
+                  if (!colors[k][0]) colors[k][0] = Colors.decode("lightgray");
                 var rgb = lerpRGB(proportion, colors[k][0], colors[k][1])
                 nodeData[k] = Colors.encode(rgb)
               }
