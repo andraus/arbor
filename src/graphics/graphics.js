@@ -34,6 +34,7 @@ var Graphics = function(canvas){
   var primitives = Primitives(ctx, _drawStyle, _fontStyle)
   var _Oval = primitives._Oval
   var _Rect = primitives._Rect
+  var _Octagon = primitives._Octagon
   var _Color = primitives._Color
   var _Path = primitives._Path
   ///MACRO:primitives-end    
@@ -314,6 +315,13 @@ var Graphics = function(canvas){
     oval:function(x, y, w, h, style) {
       style = style || {}
       _Oval.prototype._draw(x,y,w,h, style)
+    },
+
+    Octagon:function(x,y,w,h,r,style){
+      return new _Octagon(x,y,w,h,r,style);
+    },
+    octagon:function(x, y, w, h, r, style) {
+      _Octagon.prototype._draw(x,y,w,h,r,style);
     },
     
     // draw a line immediately

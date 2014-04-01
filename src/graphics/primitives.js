@@ -124,6 +124,70 @@ var Primitives = function(ctx, _drawStyle, _fontStyle){
       }
     }
 
+    var _Octagon = function(x,y,w,h,r,style){
+      if (objcontains(r, 'stroke', 'fill', 'width')){
+         style = r
+         r = 0
+      }
+      this.x = x
+      this.y = y
+      this.w = w
+      this.h = h
+      this.r = (r!==undefined) ? r : 0
+      this.style = (style!==undefined) ? style : {}
+    }
+    _Octagon.prototype = {
+      draw:function(overrideStyle){
+        this._draw(overrideStyle)
+      },
+
+      _draw:function(x,y,w,h,r, style){
+        if (objcontains(r, 'stroke', 'fill', 'width', 'alpha')){
+          style = r; r=0;
+        }else if (objcontains(x, 'stroke', 'fill', 'width', 'alpha')){
+          style = x
+        }
+        if (this.x!==undefined){
+          x=this.x, y=this.y, w=this.w, h=this.h;
+          style = objmerge(this.style, style)
+        }
+        style = objmerge(_drawStyle, style)
+        if (!style.stroke && !style.fill) return
+
+        var facShort = 0.275;
+        var facLong = 1 - facShort;
+
+        var wSmall = h*facShort;
+        w = w - 2*wSmall;
+
+        var rounded = (r>0);
+        ctx.save();
+        ctx.beginPath();
+        ctx.moveTo(x + wSmall, y); //1
+        ctx.lineTo(x, y + h*facShort); //2
+        ctx.lineTo(x, y + h*facLong); //3
+        ctx.lineTo(x + wSmall, y + h); //4
+        ctx.lineTo(x + w + wSmall, y + h); //5
+        ctx.lineTo(x + w + 2*wSmall, y + h*facLong); //6
+        ctx.lineTo(x + w + 2*wSmall, y + h*facShort); //7
+        ctx.lineTo(x + w + wSmall, y); //8
+        ctx.lineTo(x + wSmall, y); //9
+
+        if (style.fill!==null){
+          if (style.alpha!==undefined) ctx.fillStyle = Colors.blend(style.fill, style.alpha)
+          else ctx.fillStyle = Colors.encode(style.fill)
+          ctx.fill()
+        }
+
+        if (style.stroke!==null){
+          ctx.strokeStyle = Colors.encode(style.stroke)
+          if (!isNaN(style.width)) ctx.lineWidth = style.width
+          ctx.stroke()
+        }
+        ctx.restore()
+      }
+    }
+
     var _Path = function(x1, y1, x2, y2, style){
       // calling patterns:
       // ƒ( x1, y1, x2, y2, <style> )
@@ -245,6 +309,7 @@ var Primitives = function(ctx, _drawStyle, _fontStyle){
   return {
     _Oval:_Oval,
     _Rect:_Rect,
+    _Octagon:_Octagon,
     _Color:_Color,
     _Path:_Path
     // _Frame:Frame
