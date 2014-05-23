@@ -11,10 +11,7 @@ var Node = function(data){
 	this._fixed = (data.fixed===true) ? true : false
 	this._p = new Point((typeof(data.x)=='number') ? data.x : null, 
                      (typeof(data.y)=='number') ? data.y : null)
-  delete this.data.x
-  delete this.data.y
-  delete this.data.mass
-  delete this.data.fixed
+
 };
 var _nextNodeId = 1
 
@@ -24,7 +21,7 @@ var Edge = function(source, target, data){
 	this.target = target;
 	this.length = (data.length!==undefined) ? data.length : 1
 	this.data = (data!==undefined) ? data : {};
-	delete this.data.length
+
 };
 var _nextEdgeId = -1
 
