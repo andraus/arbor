@@ -35,6 +35,7 @@ var Graphics = function(canvas){
   var _Oval = primitives._Oval
   var _Rect = primitives._Rect
   var _Octagon = primitives._Octagon
+  var _Triangle = primitives._Triangle
   var _Color = primitives._Color
   var _Path = primitives._Path
   ///MACRO:primitives-end    
@@ -324,6 +325,13 @@ var Graphics = function(canvas){
       _Octagon.prototype._draw(x,y,w,h,r,style);
     },
     
+    Triangle:function(x, y, w, h, r, style){
+      return new _Triangle(x,y,w,h,r,style);
+    },
+    triangle:function(x, y, w, h, r, style) {
+      _Triangle.prototype._draw(x,y,w,h,r,style);
+    },
+
     // draw a line immediately
     line:function(x1, y1, x2, y2, style){
       var p = new _Path(x1,y1,x2,y2)

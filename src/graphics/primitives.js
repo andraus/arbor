@@ -188,6 +188,60 @@ var Primitives = function(ctx, _drawStyle, _fontStyle){
       }
     }
 
+    var _Triangle = function(x,y,w,h,r,style){
+      if (objcontains(r, 'stroke', 'fill', 'width')){
+         style = r
+         r = 0
+      }
+      this.x = x
+      this.y = y
+      this.w = w
+      this.h = h
+      this.r = (r!==undefined) ? r : 0
+      this.style = (style!==undefined) ? style : {}
+    }
+    _Triangle.prototype = {
+      draw:function(overrideStyle){
+        this._draw(overrideStyle)
+      },
+
+      _draw:function(x,y,w,h,r, style){
+        if (objcontains(r, 'stroke', 'fill', 'width', 'alpha')){
+          style = r; r=0;
+        }else if (objcontains(x, 'stroke', 'fill', 'width', 'alpha')){
+          style = x
+        }
+        if (this.x!==undefined){
+          x=this.x, y=this.y, w=this.w, h=this.h;
+          style = objmerge(this.style, style)
+        }
+        style = objmerge(_drawStyle, style)
+        if (!style.stroke && !style.fill) return
+
+        var rounded = (r>0);
+
+        ctx.save();
+        ctx.beginPath();
+        ctx.moveTo(x, y + h);
+        ctx.lineTo(x + w/2, y);
+        ctx.lineTo(x + w, y + h);
+        ctx.lineTo(x, y + h);
+
+        if (style.fill!==null){
+          if (style.alpha!==undefined) ctx.fillStyle = Colors.blend(style.fill, style.alpha)
+          else ctx.fillStyle = Colors.encode(style.fill)
+          ctx.fill()
+        }
+
+        if (style.stroke!==null){
+          ctx.strokeStyle = Colors.encode(style.stroke)
+          if (!isNaN(style.width)) ctx.lineWidth = style.width
+          ctx.stroke()
+        }
+        ctx.restore()
+      }
+    }
+
     var _Path = function(x1, y1, x2, y2, style){
       // calling patterns:
       // ƒ( x1, y1, x2, y2, <style> )
@@ -310,6 +364,7 @@ var Primitives = function(ctx, _drawStyle, _fontStyle){
     _Oval:_Oval,
     _Rect:_Rect,
     _Octagon:_Octagon,
+    _Triangle:_Triangle,
     _Color:_Color,
     _Path:_Path
     // _Frame:Frame
