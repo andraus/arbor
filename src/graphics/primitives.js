@@ -9,14 +9,14 @@
 var Primitives = function(ctx, _drawStyle, _fontStyle){
 
     ///MACRO:primitives-start
-    var _Oval = function(x,y,w,h,style){
+    var _Ellipse = function(x,y,w,h,style){
       this.x = x
       this.y = y
       this.w = w
       this.h = h
       this.style = (style!==undefined) ? style : {}
     }
-    _Oval.prototype = {
+    _Ellipse.prototype = {
       draw:function(overrideStyle){
         this._draw(overrideStyle)
       },
@@ -361,7 +361,7 @@ var Primitives = function(ctx, _drawStyle, _fontStyle){
 
 
   return {
-    _Oval:_Oval,
+    _Ellipse:_Ellipse,
     _Rect:_Rect,
     _Octagon:_Octagon,
     _Triangle:_Triangle,

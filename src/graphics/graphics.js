@@ -32,7 +32,7 @@ var Graphics = function(canvas){
   
   ///MACRO:primitives-start
   var primitives = Primitives(ctx, _drawStyle, _fontStyle)
-  var _Oval = primitives._Oval
+  var _Ellipse = primitives._Ellipse
   var _Rect = primitives._Rect
   var _Octagon = primitives._Octagon
   var _Triangle = primitives._Triangle
@@ -310,12 +310,12 @@ var Graphics = function(canvas){
       _Rect.prototype._draw(x,y,w,h,r,style)
     },
     
-    Oval:function(x, y, w, h, style) {
-      return new _Oval(x,y,w,h, style)
+    Ellipse:function(x, y, w, h, style) {
+      return new _Ellipse(x,y,w,h, style)
     },
-    oval:function(x, y, w, h, style) {
+    ellipse:function(x, y, w, h, style) {
       style = style || {}
-      _Oval.prototype._draw(x,y,w,h, style)
+      _Ellipse.prototype._draw(x,y,w,h, style)
     },
 
     Octagon:function(x,y,w,h,r,style){
