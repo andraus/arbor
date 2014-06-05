@@ -222,10 +222,13 @@ var Primitives = function(ctx, _drawStyle, _fontStyle){
 
         ctx.save();
         ctx.beginPath();
-        ctx.moveTo(x, y + h);
-        ctx.lineTo(x + w/2, y);
-        ctx.lineTo(x + w, y + h);
-        ctx.lineTo(x, y + h);
+        ctx.moveTo(x + w/2 + r, y + r);
+        ctx.lineTo(x + w - r, y + h - r);
+        ctx.quadraticCurveTo(x + w, y + h, x + w - r, y + h + r);
+        ctx.lineTo(x + r, y + h + r);
+        ctx.quadraticCurveTo(x, y + h, x + r, y + h - r);
+        ctx.lineTo(x + w/2 - r, y + r);
+        ctx.quadraticCurveTo(x + w/2, y, x + w/2 + r, y + r);
 
         if (style.fill!==null){
           if (style.alpha!==undefined) ctx.fillStyle = Colors.blend(style.fill, style.alpha)
