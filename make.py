@@ -187,7 +187,7 @@ def get_yui():
     f.write(jardata)
   print "placed jar at",'.yui/%s'%os.path.basename(jarpath)
   
-  binfile = "#!/bin/sh\n\njava -jar %s $@\n" % os.path.abspath('.yui/'+os.path.basename(jarpath))
+  binfile = "#!/bin/sh\n\njava -jar %s $@\n" % ('.yui/'+os.path.basename(jarpath))
   with file('yui','wb') as f:
     f.write(binfile)
   os.chmod('yui',0755)
@@ -206,9 +206,9 @@ def main():
       else:
         print "Please adjust the YUI_PATH variable in the script to point to the proper command"
         sys.exit(1)
-    YUI_PATH = os.path.abspath('./yui')
+    YUI_PATH = './yui'
 
-  os.chdir("%s/.."%os.path.dirname(os.path.abspath(__file__)))
+  #os.chdir("%s/.."%os.path.dirname(os.path.abspath(__file__)))
   make_lib()
 
 
