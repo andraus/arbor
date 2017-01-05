@@ -193,6 +193,9 @@ def get_yui():
   os.chmod('yui',0755)
   print "created yui script in current dir\n"
   
+
+def zip():
+  shutil.make_archive("arbor", "zip", "lib")
   
 def main():
   global YUI_PATH
@@ -210,6 +213,8 @@ def main():
 
   #os.chdir("%s/.."%os.path.dirname(os.path.abspath(__file__)))
   make_lib()
+  zip()
+
 
 
 if __name__ == '__main__':
